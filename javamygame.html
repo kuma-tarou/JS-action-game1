@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>クマタロウの自作ゲーム</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="1200" height="800"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+var humanX = 100;
+var humanY = 675;
+var rightPressed = false;
+var leftPressed = false;
+var spacePressed = false;
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+
+function keyDownHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+    }
+    if(e.keyCode =="32") {
+        spacePressed = true;
+    }
+}
+function keyUpHandler(e) {
+    if(e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+    }
+    else if(e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+    }
+}
+function drawBox() {
+    context.beginPath();
+    context.strokeRect(600,675,100,100);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawLand() {
+    context.beginPath();
+    context.moveTo(0,775);
+    context.lineTo(1200,775);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawHead() {
+    context.beginPath();
+    context.arc(humanX,humanY,15,0*Math.PI/180,360*Math.PI/180,false);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawBody() {
+    context.beginPath();
+    context.moveTo(humanX,humanY+15);
+    context.lineTo(humanX,humanY+60);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawRightarm() {
+    context.beginPath();
+    context.moveTo(humanX,humanY+60);
+    context.lineTo(humanX+15,humanY+100);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawLeftarm() {
+    context.beginPath();
+    context.moveTo(humanX,humanY+60);
+    context.lineTo(humanX-15,humanY+100);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawRightleg() {
+    context.beginPath();
+    context.moveTo(humanX,humanY+30);
+    context.lineTo(humanX+15,humanY+50);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function drawLeftleg() {
+    context.beginPath();
+    context.moveTo(humanX,humanY+30);
+    context.lineTo(humanX-15,humanY+50);
+    context.strokeStyle="#000000";
+    context.lineWidth= 3 ;
+    context.stroke();
+    context.closePath();
+}
+function draw() {
+    context.clearRect(0, 0, 1200, 800);
+    
+    drawBox();
+    drawLand();
+    drawHead();
+    drawBody();
+    drawRightarm();
+    drawLeftarm();
+    drawRightleg();
+    drawLeftleg();
+     
+    if(rightPressed && humanX < 1185) {
+    if(humanX < 585 || humanY <= 575 || humanX >= 715) {
+        humanX += 5;
+       }
+    }
+    if(leftPressed && humanX > 15) {
+    if(humanX > 715 || humanY <= 575 || humanX <= 585) {
+        humanX -= 5;
+    }
+}
+    if(spacePressed) {
+    humanY -= 20;
+    setTimeout("spacePressed = false",200);
+    }
+    if(humanY < 675) {
+    if(humanX > 715 || humanX < 585)
+    humanY += 10;
+    if(humanX < 685 || humanX > 585) {
+    if(humanY < 575) {
+    humanY += 10;
+     }
+   }
+  }    
+}
+var interval = setInterval(draw, 10);
+</script>
+</body>
+</html>
