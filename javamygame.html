@@ -19,6 +19,10 @@ var humanY = 675;
 var rightPressed = false;
 var leftPressed = false;
 var spacePressed = false;
+var jumptime = 0;
+var jumpaction = setInterval(function() {
+cosole.log(jumptime);
+jumptime++;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -137,7 +141,10 @@ function draw() {
 }
     if(spacePressed) {
     humanY -= 20;
-    setTimeout("spacePressed = false",200);
+    if(jumptime ==10) {
+    clearInterval(jumptime);
+    spacePressed = false;
+    }
     }
     if(humanY < 675) {
     if(humanX > 715 || humanX < 585)
